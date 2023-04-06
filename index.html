@@ -9,8 +9,25 @@
         font-family: Arial, sans-serif;
         font-size: 16px;
         color: #333;
-        background-color: #f9f9f9;
+ 
+
+
+
         line-height: 1.5;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("img/bin.png");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
+        opacity: 0.1; /* Adjust the opacity as desired */
+        z-index:-1;
       }
 
       h1,
@@ -27,19 +44,21 @@
 
       /* Container styles */
       .container {
-        max-width: 960px;
+        max-width: 600px;
         margin: 0 auto;
-        padding: 40px 20px;
+        background-color: transparent;
+        padding: 20px 20px;
       }
 
       /* Form styles */
       form {
         display: flex;
+        flex-direction: column;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
         margin: 0 auto;
-        max-width: 600px;
+        max-width: 400px;
       }
 
       label {
@@ -58,7 +77,7 @@
         border-radius: 4px;
         box-sizing: border-box;
         font-size: 16px;
-        background-color: #fff;
+        background-color: #bebebe;
         color: #333;
         box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
       }
@@ -72,7 +91,7 @@
       .tabs {
         max-width: 600px;
         margin: 0 auto;
-        background-color: #f5f5f5;
+        background-color: transparent;
         border-radius: 5px;
         overflow: hidden;
         display: flex;
@@ -107,107 +126,109 @@
       .tabcontent {
         display: none;
         padding: 18px 12px;
-        border: 1px solid #ccc;
-        border-top: none;
+        border: 1px solid #000000;
+        border-top: #ccc;
       }
     </style>
   </head>
   <body>
     <h1>Macro Calculator</h1>
     <p>40-40-20</p>
-    <div class="tabs">
-      <div class="tab">
-        <button
-          class="tablinks"
-          onclick="openCity(event, 'US')"
-          id="defaultOpen"
-        >
-          US Standard
-        </button>
-        <button class="tablinks" onclick="openCity(event, 'metric')">
-          Metric
-        </button>
-      </div>
-      <div id="metric" class="tabcontent">
-        <form width="500">
-          <div>
-            <label for="age">Age:</label>
-            <input id="age" type="number" value="0" />
-          </div>
-
-          <div>
-            <label for="sex">Gender:</label>
-            <select id="sex">
-              <option value="2">Female</option>
-              <option value="1">Male</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="height">Height (cm):</label>
-            <input id="height" type="number" value="0" />
-          </div>
-
-          <div>
-            <label for="weight">Weight (kg):</label>
-            <input id="weight" type="number" value="0" />
-          </div>
-
-          <div>
-            <label for="activity-level">Activity Level:</label>
-            <select id="activity-level">
-              <option value="1.2">Sedentary</option>
-              <option value="1.375">Lightly Active</option>
-              <option value="1.55">Moderately Active</option>
-              <option value="1.725">Very Active</option>
-              <option value="1.9">Extremely Active</option>
-            </select>
-          </div>
-
-          <button type="button" onclick="calculateMetricMacros()">
-            Calculate
+    <div class="container">
+      <div class="tabs">
+        <div class="tab">
+          <button
+            class="tablinks"
+            onclick="openCity(event, 'US')"
+            id="defaultOpen"
+          >
+            US Standard
           </button>
-        </form>
-      </div>
-      <div id="US" class="tabcontent">
-        <form>
-          <div>
-            <label for="age2">Age:</label>
-            <input id="age2" type="number" value="0" />
-          </div>
+          <button class="tablinks" onclick="openCity(event, 'metric')">
+            Metric
+          </button>
+        </div>
+        <div id="metric" class="tabcontent">
+          <form width="500">
+            <div>
+              <label for="age">Age:</label>
+              <input id="age" type="number" value="0" />
+            </div>
 
-          <div>
-            <label for="sex2">Gender:</label>
-            <select id="sex2">
-              <option value="2">Female</option>
-              <option value="1">Male</option>
-            </select>
-          </div>
+            <div>
+              <label for="sex">Gender:</label>
+              <select id="sex">
+                <option value="2">Female</option>
+                <option value="1">Male</option>
+              </select>
+            </div>
 
-          <div>
-            <label for="feet">Height (ft):</label>
-            <input id="feet" type="number" value="0" />
-            <label for="inches">(in):</label>
-            <input id="inches" type="number" value="0" />
-          </div>
+            <div>
+              <label for="height">Height (cm):</label>
+              <input id="height" type="number" value="0" />
+            </div>
 
-          <div>
-            <label for="lbs">Weight (lbs):</label>
-            <input id="lbs" type="number" value="0" />
-          </div>
+            <div>
+              <label for="weight">Weight (kg):</label>
+              <input id="weight" type="number" value="0" />
+            </div>
 
-          <div>
-            <label for="activity-level2">Activity Level:</label>
-            <select id="activity-level2">
-              <option value="1.2">Sedentary</option>
-              <option value="1.375">Lightly Active</option>
-              <option value="1.55">Moderately Active</option>
-              <option value="1.725">Very Active</option>
-              <option value="1.9">Extremely Active</option>
-            </select>
-          </div>
-        </form>
-        <button type="button" onclick="calculateUSMacros()">Calculate</button>
+            <div>
+              <label for="activity-level">Activity Level:</label>
+              <select id="activity-level">
+                <option value="1.2">Sedentary</option>
+                <option value="1.375">Lightly Active</option>
+                <option value="1.55">Moderately Active</option>
+                <option value="1.725">Very Active</option>
+                <option value="1.9">Extremely Active</option>
+              </select>
+            </div>
+
+            <button type="button" onclick="calculateMetricMacros()">
+              Calculate
+            </button>
+          </form>
+        </div>
+        <div id="US" class="tabcontent">
+          <form>
+            <div>
+              <label for="age2">Age:</label>
+              <input id="age2" type="number" value="0" />
+            </div>
+
+            <div>
+              <label for="sex2">Gender:</label>
+              <select id="sex2">
+                <option value="2">Female</option>
+                <option value="1">Male</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="feet">Height (ft):</label>
+              <input id="feet" type="number" value="0" />
+              <label for="inches">(in):</label>
+              <input id="inches" type="number" value="0" />
+            </div>
+
+            <div>
+              <label for="lbs">Weight (lbs):</label>
+              <input id="lbs" type="number" value="0" />
+            </div>
+
+            <div>
+              <label for="activity-level2">Activity Level:</label>
+              <select id="activity-level2">
+                <option value="1.2">Sedentary</option>
+                <option value="1.375">Lightly Active</option>
+                <option value="1.55">Moderately Active</option>
+                <option value="1.725">Very Active</option>
+                <option value="1.9">Extremely Active</option>
+              </select>
+            </div>
+          </form>
+          <button type="button" onclick="calculateUSMacros()">Calculate</button>
+        </div>
       </div>
     </div>
     <h2>Macronutrient Recommendations</h2>
