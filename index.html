@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title font-size: 20px>Macro Calculator</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #333;
+        background-color: #f9f9f9;
+        line-height: 1.5;
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      p {
+        margin: 0;
+        text-align: center;
+      }
+
+      /* Container styles */
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      /* Form styles */
+      form {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto;
+        max-width: 600px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      input[type="number"],
+      select {
+        display: block;
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+        background-color: #fff;
+        color: #333;
+        box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      input[type="number"]:focus,
+      select:focus {
+        outline: none;
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+      }
+      /* Style the tab */
+      .tabs {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #f5f5f5;
+        border-radius: 5px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .tab {
+        display: flex;
+        justify-content: center;
+      }
+
+      .tablinks {
+        text-align: center;
+        background-color: inherit;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+      }
+
+      .tablinks:hover {
+        background-color: #ddd;
+      }
+
+      .tablinks.active {
+        background-color: #ccc;
+      }
+
+      .tabcontent {
+        display: none;
+        padding: 18px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Macro Calculator</h1>
+    <p>40-40-20</p>
+    <div class="tabs">
+      <div class="tab">
+        <button
+          class="tablinks"
+          onclick="openCity(event, 'US')"
+          id="defaultOpen"
+        >
+          US Standard
+        </button>
+        <button class="tablinks" onclick="openCity(event, 'metric')">
+          Metric
+        </button>
+      </div>
+      <div id="metric" class="tabcontent">
+        <form width="500">
+          <div>
+            <label for="age">Age:</label>
+            <input id="age" type="number" value="0" />
+          </div>
+
+          <div>
+            <label for="sex">Gender:</label>
+            <select id="sex">
+              <option value="2">Female</option>
+              <option value="1">Male</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="height">Height (cm):</label>
+            <input id="height" type="number" value="0" />
+          </div>
+
+          <div>
+            <label for="weight">Weight (kg):</label>
+            <input id="weight" type="number" value="0" />
+          </div>
+
+          <div>
+            <label for="activity-level">Activity Level:</label>
+            <select id="activity-level">
+              <option value="1.2">Sedentary</option>
+              <option value="1.375">Lightly Active</option>
+              <option value="1.55">Moderately Active</option>
+              <option value="1.725">Very Active</option>
+              <option value="1.9">Extremely Active</option>
+            </select>
+          </div>
+
+          <button type="button" onclick="calculateMetricMacros()">
+            Calculate
+          </button>
+        </form>
+      </div>
+      <div id="US" class="tabcontent">
+        <form>
+          <div>
+            <label for="age2">Age:</label>
+            <input id="age2" type="number" value="0" />
+          </div>
+
+          <div>
+            <label for="sex2">Gender:</label>
+            <select id="sex2">
+              <option value="2">Female</option>
+              <option value="1">Male</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="feet">Height (ft):</label>
+            <input id="feet" type="number" value="0" />
+            <label for="inches">(in):</label>
+            <input id="inches" type="number" value="0" />
+          </div>
+
+          <div>
+            <label for="lbs">Weight (lbs):</label>
+            <input id="lbs" type="number" value="0" />
+          </div>
+
+          <div>
+            <label for="activity-level2">Activity Level:</label>
+            <select id="activity-level2">
+              <option value="1.2">Sedentary</option>
+              <option value="1.375">Lightly Active</option>
+              <option value="1.55">Moderately Active</option>
+              <option value="1.725">Very Active</option>
+              <option value="1.9">Extremely Active</option>
+            </select>
+          </div>
+        </form>
+        <button type="button" onclick="calculateUSMacros()">Calculate</button>
+      </div>
+    </div>
+    <h2>Macronutrient Recommendations</h2>
+    <p>Protein: <span id="protein-recommendation">0</span> g</p>
+    <p>Carbohydrates: <span id="carb-recommendation">0</span> g</p>
+    <p>Fat: <span id="fat-recommendation">0</span> g</p>
+    <p>Calories: <span id="dailyCaloricNeeds">0</span> g</p>
+
+    <script>
+      function openCity(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+      }
+      function calculateMetricMacros() {
+        // Get the user's weight and activity level from the input fields
+        let weight = +document.getElementById("weight").value;
+        let activityLevel = +document.getElementById("activity-level").value;
+        let sex = document.getElementById("sex").value;
+        let age = +document.getElementById("age").value;
+        let height = +document.getElementById("height").value;
+
+        // Check that the input values are valid
+        if (
+          isNaN(weight) ||
+          isNaN(activityLevel) ||
+          isNaN(age) ||
+          isNaN(height)
+        ) {
+          alert(
+            "Please enter a valid number for your weight, activity level, age, and height."
+          );
+          return;
+        }
+        if (weight <= 0) {
+          alert("Your weight must be a positive number.");
+          return;
+        }
+        if (age <= 0 || age > 120) {
+          alert("Please enter a valid age.");
+          return;
+        }
+
+        let dailyCaloricNeeds;
+
+        // Calculate the user's daily caloric needs based on their weight and activity level
+        if (sex == "2") {
+          dailyCaloricNeeds =
+            (10 * weight + 6.25 * height - 5 * age - 161) * activityLevel;
+        } else {
+          dailyCaloricNeeds =
+            (10 * weight + 6.25 * height - 5 * age + 5) * activityLevel;
+        }
+
+        // Calculate the recommended intake of protein, carbohydrates, and fat
+        let proteinRecommendation = (dailyCaloricNeeds * 0.4) / 2;
+        let carbRecommendation = (dailyCaloricNeeds * 0.4) / 4;
+        let fatRecommendation = (dailyCaloricNeeds * 0.2) / 9;
+
+        // Display the calculated recommendations in the page
+        document.getElementById("protein-recommendation").innerHTML =
+          Math.round(proteinRecommendation);
+        document.getElementById("carb-recommendation").innerHTML =
+          Math.round(carbRecommendation);
+        document.getElementById("fat-recommendation").innerHTML =
+          Math.round(fatRecommendation);
+        document.getElementById("dailyCaloricNeeds").innerHTML =
+          Math.round(dailyCaloricNeeds);
+      }
+      function calculateUSMacros() {
+        // Get the user's weight and activity level from the input fields
+        let lbs = +document.getElementById("lbs").value;
+        let weigh = lbs / 2.20462;
+        let feet = +document.getElementById("feet").value;
+        let inches = +document.getElementById("inches").value;
+        let activityLevel2 = +document.getElementById("activity-level2").value;
+        let sex2 = document.getElementById("sex2").value;
+        let age2 = +document.getElementById("age2").value;
+        let heightInInches = feet * 12 + inches;
+        let heightInCentimeters = heightInInches / 0.3937;
+        let heigh = Math.round(heightInCentimeters);
+
+        // Check that the input values are valid
+        if (
+          isNaN(weigh) ||
+          isNaN(activityLevel2) ||
+          isNaN(age2) ||
+          isNaN(heigh)
+        ) {
+          alert(
+            "Please enter a valid number for your weight, activity level, age, and height."
+          );
+          return;
+        }
+        if (weigh <= 0) {
+          alert("Your weight must be a positive number.");
+          return;
+        }
+        if (age2 <= 0 || age2 > 120) {
+          alert("Please enter a valid age.");
+          return;
+        }
+
+        let dailyCaloricNeeds2;
+
+        // Calculate the user's daily caloric needs based on their weight and activity level
+        if (sex2 == "1") {
+          dailyCaloricNeeds2 =
+            (10 * weigh + 6.25 * heigh - 5 * age2 + 5) * activityLevel2;
+        } else {
+          dailyCaloricNeeds2 =
+            (10 * weigh + 6.25 * heigh - 5 * age2 - 161) * activityLevel2;
+        }
+
+        // Calculate the recommended intake of protein, carbohydrates, and fat
+        let proteinRecommendation2 = weigh * 2;
+        let carbRecommendation2 = (dailyCaloricNeeds2 * 0.4) / 4;
+        let fatRecommendation2 = weigh;
+
+        // Display the calculated recommendations in the page
+        document.getElementById("protein-recommendation").innerHTML =
+          Math.round(proteinRecommendation2);
+        document.getElementById("carb-recommendation").innerHTML =
+          Math.round(carbRecommendation2);
+        document.getElementById("fat-recommendation").innerHTML =
+          Math.round(fatRecommendation2);
+        document.getElementById("dailyCaloricNeeds").innerHTML =
+          Math.round(dailyCaloricNeeds2);
+      }
+      document.getElementById("defaultOpen").click();
+    </script>
+  </body>
+</html>
